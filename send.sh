@@ -33,9 +33,9 @@ COMMIT_MESSAGE="$(git log -1 "$CI_COMMIT_SHA" --pretty="%b")" | sed -E ':a;N;$!b
 
 
 if [ "$AUTHOR_NAME" == "$COMMITTER_NAME" ]; then
-  CREDITS="$AUTHOR_NAME $CI_COMMIT_AUTHOR authored & committed: $CI_COMMIT_MESSAGE"
+  CREDITS="$AUTHOR_NAME authored & committed: $CI_COMMIT_MESSAGE"
 else
-  CREDITS="$AUTHOR_NAME $CI_COMMIT_AUTHOR authored & $COMMITTER_NAME committed: $CI_COMMIT_MESSAGE"
+  CREDITS="$AUTHOR_NAME authored & $COMMITTER_NAME committed: $CI_COMMIT_MESSAGE"
 fi
 
 if [ -z $CI_MERGE_REQUEST_ID ]; then
