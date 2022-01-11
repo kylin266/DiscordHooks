@@ -22,8 +22,7 @@ esac
 
 shift
 
-echo $CI_COMMIT_MESSAGE
-echo $GITLAB_USER_ID
+echo $GITLAB_USER_EMAIL
 if [ $# -lt 1 ]; then
   echo -e "WARNING!!\nYou need to pass the WEBHOOK_URL environment variable as the second argument to this script.\nFor details & guide, visit: https://github.com/DiscordHooks/gitlab-ci-discord-webhook" && exit
 fi
@@ -35,9 +34,9 @@ COMMIT_MESSAGE="$(git log -1 "$CI_COMMIT_SHA" --pretty="%b")" | sed -E ':a;N;$!b
 
 
 if [ "$AUTHOR_NAME" == "$COMMITTER_NAME" ]; then
-  CREDITS="$AUTHOR_NAME authored & committed: $COMMIT_MESSAGE"
+  CREDITS="$GITLAB_USER_EMAIL authored & committed: $$CI_COMMIT_MESSAGE"
 else
-  CREDITS="$AUTHOR_NAME authored & $COMMITTER_NAME committed: $COMMIT_MESSAGE"
+  CREDITS="$GITLAB_USER_EMAIL authored & $COMMITTER_NAME committed: $CI_COMMIT_MESSAGE"
 fi
 
 if [ -z $CI_MERGE_REQUEST_ID ]; then
