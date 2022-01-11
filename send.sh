@@ -34,7 +34,7 @@ COMMIT_MESSAGE="$(git log -1 "$CI_COMMIT_SHA" --pretty="%b")" | sed -E ':a;N;$!b
 
 
 if [ "$AUTHOR_NAME" == "$COMMITTER_NAME" ]; then
-  CREDITS="$GITLAB_USER_EMAIL authored & committed: $$CI_COMMIT_MESSAGE"
+  CREDITS="$GITLAB_USER_EMAIL authored & committed: $CI_COMMIT_MESSAGE"
 else
   CREDITS="$GITLAB_USER_EMAIL authored & $COMMITTER_NAME committed: $CI_COMMIT_MESSAGE"
 fi
