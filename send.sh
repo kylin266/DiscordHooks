@@ -37,9 +37,9 @@ COMMIT_MESSAGE="$(git log -1 "$CI_COMMIT_SHA" --pretty="%b")" | sed -E ':a;N;$!b
 
 
 if [ "$AUTHOR_NAME" == "$COMMITTER_NAME" ]; then
-  CREDITS=" $GITLAB_USER_EMAIL authored & committed: $CI_COMMIT_MESSAGE "
+  CREDITS=" $GITLAB_USER_EMAIL authored & committed"
 else
-  CREDITS=" $GITLAB_USER_EMAIL authored & $COMMITTER_NAME committed: $CI_COMMIT_MESSAGE "
+  CREDITS=" $GITLAB_USER_EMAIL authored & $COMMITTER_NAME committed"
 fi
 
 if [ -z $CI_MERGE_REQUEST_ID ]; then
@@ -63,7 +63,7 @@ if [ -z $LINK_ARTIFACT ] || [ $LINK_ARTIFACT = false ] ; then
       },
       "title": "'"$COMMIT_SUBJECT"'",
       "url": "'"$URL"'",
-      "description": "'"${COMMIT_MESSAGE//$'\n'/ }"\\n\\n"$CREDITS"'",
+      "description": "'"${CI_COMMIT_MESSAGE//$'\n'/ }"\\n\\n"$CREDITS"'",
       "fields": [
         {
           "name": "Commit",
@@ -92,7 +92,7 @@ else
       },
       "title": "'"$COMMIT_SUBJECT"'",
       "url": "'"$URL"'",
-      "description": "'"${COMMIT_MESSAGE//$'\n'/ }"\\n\\n"$CREDITS"'",
+      "description": "'"${CI_COMMIT_MESSAGE//$'\n'/ }"\\n\\n"$CREDITS"'",
       "fields": [
       {
         "name": "Commit",
