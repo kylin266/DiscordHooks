@@ -29,22 +29,16 @@ CREDITS=" committed"
 
 [ -z $CI_MERGE_REQUEST_ID ] || URL="$CI_PROJECT_URL/merge_requests/$CI_MERGE_REQUEST_ID"
 [ -z $LINK_ARTIFACT ] || [ $LINK_ARTIFACT = false ] || LINK_ARTIFACT=','$'\n''    { "name": "Artifacts", "value": "'"[\`$CI_JOB_ID\`]($ARTIFACT_URL)"'", "inline": true }'
-DISCORD_WEBHOOK_DATA='{
-  "username": "", "avatar_url": "https://gitlab.com/favicon.png",
+DISCORD_WEBHOOK_DATA='{ "username": "", "avatar_url": "https://gitlab.com/favicon.png",
   "embeds": [ {
-    "author": {
-      "name": "Pipeline #'"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"'",
-      "url": "'"$CI_PIPELINE_URL"'", "icon_url": "https://gitlab.com/favicon.png"
-    },
+    "author": { "name": "Pipeline #'"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"'", "url": "'"$CI_PIPELINE_URL"'", "icon_url": "https://gitlab.com/favicon.png" },
     "color": '$EMBED_COLOR', "title": "'"$CI_COMMIT_TITLE"'", "url": "'"${URL:-}"'", "description": "'"${CI_COMMIT_DESCRIPTION//$'\n'/ }"\\n\\n"$CREDITS"'", "timestamp": "'"$CI_JOB_STARTED_AT"'",
     "fields": [ 
       { "name": "Commit", "value": "'"[\`$CI_COMMIT_SHORT_SHA\`]($CI_PROJECT_URL/commit/$CI_COMMIT_SHA)"'", "inline": true },
       { "name": "Branch", "value": "'"[\`$CI_COMMIT_REF_NAME\`]($CI_PROJECT_URL/tree/$CI_COMMIT_REF_NAME)"'", "inline": true}'"${LINK_ARTIFACT:-}"'
-    ]
-  } ]
-}'
+] } ] }'
 
-#---Google Chat Webhook
+#-----Google Chat Webhook
 export parent=spaces/AAAAvhfgZQ8 key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI token=C84V7QzXJ5tQ0Uyq2XTHFUwLK1Oo8lg7FKsBv4wRAQ8%3D threadKey="$CI_COMMIT_SHORT_SHA'-'$CI_PIPELINE_IID"
 [ -z ${threadKey+x} ] || threadKey="&threadKey=${threadKey:-}"; [ -z ${requestId+x} ] || requestId="&requestId=${requestId:-}"
 [ "$STATUS_MESSAGE" = 'Passed' ] && { COL='00ff00'; IU='PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDdhNyA3IDAgMSAxIDE0IDBBNyA3IDAgMCAxIDAgN3oiLz48cGF0aCBkPSJNMTMgN0E2IDYgMCAxIDAgMSA3YTYgNiAwIDAgMCAxMiAweiIgZmlsbD0iI0ZGRiIgc3R5bGU9ImZpbGw6IHZhcigtLXN2Zy1zdGF0dXMtYmcsICNmZmYpOyIvPjxwYXRoIGQ9Ik02LjI3OCA3LjY5N0w1LjA0NSA2LjQ2NGEuMjk2LjI5NiAwIDAgMC0uNDItLjAwMmwtLjYxMy42MTRhLjI5OC4yOTggMCAwIDAgLjAwMi40MmwxLjkxIDEuOTA5YS41LjUgMCAwIDAgLjcwMy4wMDVsLjI2NS0uMjY1TDkuOTk3IDYuMDRhLjI5MS4yOTEgMCAwIDAtLjAwOS0uNDA4bC0uNjE0LS42MTRhLjI5LjI5IDAgMCAwLS40MDgtLjAwOUw2LjI3OCA3LjY5N3oiLz48L2c+PC9zdmc+Cg=='; } || { COL='ff0000'; IU='PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDdhNyA3IDAgMSAxIDE0IDBBNyA3IDAgMCAxIDAgN3oiLz48cGF0aCBkPSJNMTMgN0E2IDYgMCAxIDAgMSA3YTYgNiAwIDAgMCAxMiAweiIgZmlsbD0iI0ZGRiIgc3R5bGU9ImZpbGw6IHZhcigtLXN2Zy1zdGF0dXMtYmcsICNmZmYpOyIvPjxwYXRoIGQ9Ik03IDUuOTY5TDUuNTk5IDQuNTY4YS4yOS4yOSAwIDAgMC0uNDEzLjAwNGwtLjYxNC42MTRhLjI5NC4yOTQgMCAwIDAtLjAwNC40MTNMNS45NjggN2wtMS40IDEuNDAxYS4yOS4yOSAwIDAgMCAuMDA0LjQxM2wuNjE0LjYxNGMuMTEzLjExNC4zLjExNy40MTMuMDA0TDcgOC4wMzJsMS40MDEgMS40YS4yOS4yOSAwIDAgMCAuNDEzLS4wMDRsLjYxNC0uNjE0YS4yOTQuMjk0IDAgMCAwIC4wMDQtLjQxM0w4LjAzMiA3bDEuNC0xLjQwMWEuMjkuMjkgMCAwIDAtLjAwNC0uNDEzbC0uNjE0LS42MTRhLjI5NC4yOTQgMCAwIDAtLjQxMy0uMDA0TDcgNS45Njh6Ii8+PC9nPjwvc3ZnPgo='; }
@@ -87,7 +81,7 @@ GCHAT_WEBHOOK_DATA='{
               }
             }
 ] } ] } ] }'
-#---
+#-----
 
 for ARG in "$@"; do
   echo -e "[Webhook]: Sending webhook to Discord...\\n";
@@ -95,6 +89,6 @@ for ARG in "$@"; do
    && echo -e "\\n[Webhook]: Successfully sent Discord webhook." || echo -e "\\n[Webhook]: Unable to send Discord webhook."
 
   echo -e "[Webhook]: Sending webhook to Google Chat...\\n";
-  (curl -f -H 'Content-Type: application/json' -X POST  -d "$GCHAT_WEBHOOK_DATA") 'https://chat.googleapis.com/v1/'${parent}'/messages?key='${key}'&token='${token}${threadKey}${requestId} \
+  (curl -f -H 'Content-Type: application/json' -X POST  -d "$GCHAT_WEBHOOK_DATA" 'https://chat.googleapis.com/v1/'${parent}'/messages?key='${key}'&token='${token}${threadKey}${requestId}) \
    && echo -e "\\n[Webhook]: Successfully sent Google Chat webhook." || echo -e "\\n[Webhook]: Unable to send Google Chat webhook."
 done
