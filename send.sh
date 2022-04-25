@@ -1,6 +1,6 @@
 #!/bin/bash
 #https://github.com/DiscordHooks/gitlab-ci-discord-webhook
-#todo- replace artifact code
+#todo- replace ?useless? artifact code
 
 function htmlEscape(){ local s="${1//&/&amp;}"; s="${s//</&lt;}"; s="${s//>/&gt;}"; echo "${s//'"'/&quot;}"; } #stop code injection
 
@@ -44,18 +44,11 @@ export parent=spaces/AAAAvhfgZQ8 key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI tok
 [ -z $LINK_ARTIFACT ] || [ $LINK_ARTIFACT = false ] || ARTIFACTS='{ "keyValue": { "topLabel": "Artifacts: '$CI_JOB_ID'", "content": " ", "contentMultiline": "false", "onClick": { "openLink": { "url": "'$ARTIFACT_URL'" } }, "button": { "imageButton": { "name": "Artifacts: '$CI_JOB_ID'", "iconUrl": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTEuNSA0LjV2LTJoMTN2MmgtMTNaTTEgNmExIDEgMCAwIDEtMS0xVjJhMSAxIDAgMCAxIDEtMWgxNGExIDEgMCAwIDEgMSAxdjNhMSAxIDAgMCAxLTEgMXY4YTEgMSAwIDAgMS0xIDFIMmExIDEgMCAwIDEtMS0xVjZabTEuNSAwdjcuNWgxMVY2aC0xMVpNNCA4Ljc1QS43NS43NSAwIDAgMSA0Ljc1IDhoNi41YS43NS43NSAwIDAgMSAwIDEuNWgtNi41QS43NS43NSAwIDAgMSA0IDguNzVaIiBmaWxsPSIjMDAwIi8+PC9zdmc+", "onClick": { "openLink": { "url": "'$ARTIFACT_URL'" } } } } } },'
 GCHAT_WEBHOOK_DATA='{
   "name": "'$CI_COMMIT_SHORT_SHA'-'$CI_PIPELINE_IID'", "text": "", "previewText": "preview", "fallbackText": "fallback", "argumentText": "argument",
-  "cards": [
-    {
-      "name": "'$CI_COMMIT_SHORT_SHA'-'$CI_PIPELINE_IID'",
-      "header": {
+  "cards": [ { "name": "'$CI_COMMIT_SHORT_SHA'-'$CI_PIPELINE_IID'", "header": {
         "title": "Pipeline #'$CI_PIPELINE_IID' - '$STATUS_MESSAGE'", "subtitle": "'$CI_PROJECT_PATH_SLUG'",
         "imageUrl": "https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png",
         "imageStyle": "AVATAR", "imageAltText": "GitLab Icon"
-      },
-      "sections": [
-        {
-          "collapsable": false, "uncollapsableWidgetsCount": 0, "header": "",
-          "widgets": [
+      }, "sections": [ { "collapsable": false, "uncollapsableWidgetsCount": 0, "header": "", "widgets": [
             {
               "keyValue": {
                 "topLabel": "Commit: '$CI_COMMIT_SHORT_SHA'",
@@ -74,7 +67,7 @@ GCHAT_WEBHOOK_DATA='{
             },'"$ARTIFACTS"'
             {
               "keyValue": {
-                "topLabel": "Pipeline: '$CI_PIPELINE_IID'", "content": "<b><font color=\"#'$EMBED_COLOR'\">'$STATUS_MESSAGE'</font></b>", "bottomLabel": "",
+                "topLabel": "Pipeline: '$CI_PIPELINE_IID'", "content": "<b><font color=\"#'$COL'\">'$STATUS_MESSAGE'</font></b>", "bottomLabel": "",
                 "contentMultiline": "false", "onClick": { "openLink": { "url": "'$CI_PIPELINE_URL'" } },
                 "button": { "imageButton": { "name": "Pipeline: '$CI_PIPELINE_IID'", "iconUrl": "data:image/svg+xml;base64,'"$IU"'", "onClick": { "openLink": { "url": "'$CI_PIPELINE_URL'" } } } }
               }
